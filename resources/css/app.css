@@ -1,0 +1,532 @@
+@import "tailwindcss";
+
+/* =========================
+   Основни поставки
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Figtree", Arial, sans-serif;
+    color: #4a2b3c;
+    background:
+        radial-gradient(circle at top left, #ffe5ef 0, transparent 35%),
+        linear-gradient(135deg, #fff7fa 0%, #fce8f0 100%);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+}
+
+/* =========================
+   Главен container
+========================= */
+
+.container {
+    width: min(1100px, calc(100% - 40px));
+    margin: 0 auto;
+}
+
+.page-content {
+    padding-top: 45px;
+    padding-bottom: 70px;
+}
+
+/* =========================
+   Header и навигација
+========================= */
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 248, 251, 0.94);
+    border-bottom: 1px solid #f1c5d5;
+    box-shadow: 0 5px 20px rgba(137, 63, 91, 0.08);
+    backdrop-filter: blur(10px);
+}
+
+.nav-container {
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.site-logo {
+    color: #a83e68;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.site-logo:hover {
+    color: #d15583;
+}
+
+.main-navigation {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.main-navigation > a {
+    color: #71394f;
+    font-weight: 600;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.main-navigation > a:hover {
+    color: #c84675;
+    transform: translateY(-1px);
+}
+
+.logged-user {
+    padding: 8px 13px;
+    border-radius: 999px;
+    background: #fde1eb;
+    color: #9d345e;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.logout-form {
+    display: inline-flex;
+}
+
+/* =========================
+   Наслови
+========================= */
+
+h1,
+h2,
+h3 {
+    color: #643047;
+    margin-top: 0;
+}
+
+h1 {
+    font-size: clamp(30px, 5vw, 46px);
+    line-height: 1.15;
+}
+
+h2 {
+    font-size: 25px;
+}
+
+.page-title,
+.single-post-title {
+    margin-bottom: 20px;
+}
+
+.page-subtitle {
+    margin-top: -10px;
+    margin-bottom: 30px;
+    color: #98647a;
+}
+
+/* =========================
+   Картички
+========================= */
+
+.card {
+    padding: 32px;
+    margin-bottom: 25px;
+    background: rgba(255, 255, 255, 0.93);
+    border: 1px solid #f1c8d7;
+    border-radius: 22px;
+    box-shadow: 0 12px 35px rgba(131, 55, 84, 0.11);
+}
+
+.card:hover {
+    box-shadow: 0 16px 40px rgba(131, 55, 84, 0.15);
+}
+
+.post-card {
+    padding: 27px 30px;
+    margin-bottom: 23px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid #f3ccda;
+    border-radius: 20px;
+    box-shadow: 0 9px 26px rgba(134, 59, 88, 0.09);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 34px rgba(134, 59, 88, 0.14);
+}
+
+.post-card h2 {
+    margin-bottom: 8px;
+}
+
+.post-card h2 a {
+    color: #8e3659;
+}
+
+.post-card h2 a:hover {
+    color: #d04d7d;
+}
+
+/* =========================
+   Post metadata и content
+========================= */
+
+.post-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    color: #a06a7f;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.post-excerpt {
+    margin: 13px 0 18px;
+    color: #654453;
+    line-height: 1.7;
+}
+
+.post-content {
+    color: #533845;
+    font-size: 17px;
+    line-height: 1.85;
+    white-space: pre-line;
+}
+
+.read-more {
+    color: #bc416f;
+    font-weight: 700;
+}
+
+.read-more:hover {
+    color: #8f2d54;
+}
+
+/* =========================
+   Копчиња
+========================= */
+
+.button,
+.secondary-button,
+.delete-button,
+.logout-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 43px;
+    padding: 10px 18px;
+    border: 0;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 700;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.button {
+    color: white;
+    background: linear-gradient(135deg, #d45282, #a83663);
+    box-shadow: 0 7px 16px rgba(190, 60, 108, 0.25);
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #df6792, #b83b6e);
+    box-shadow: 0 10px 22px rgba(190, 60, 108, 0.32);
+}
+
+.secondary-button {
+    color: #8d3858;
+    background: #fbe4ec;
+    border: 1px solid #edb9cc;
+}
+
+.secondary-button:hover {
+    transform: translateY(-2px);
+    background: #f7d5e1;
+}
+
+.delete-button {
+    color: white;
+    background: #b73856;
+}
+
+.delete-button:hover {
+    transform: translateY(-2px);
+    background: #982e48;
+}
+
+.logout-button {
+    min-height: auto;
+    padding: 8px 14px;
+    color: #9d345e;
+    background: #fde1eb;
+}
+
+.logout-button:hover {
+    transform: translateY(-1px);
+    color: white;
+    background: #c74674;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 22px;
+    color: #9c3c62;
+    font-weight: 700;
+}
+
+.back-link:hover {
+    color: #d25382;
+}
+
+/* =========================
+   Post actions
+========================= */
+
+.post-actions,
+.form-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.post-actions form {
+    margin: 0;
+}
+
+/* =========================
+   Форми
+========================= */
+
+form {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 23px;
+}
+
+.form-group label,
+.checkbox-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #73384f;
+    font-weight: 700;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+    width: 100%;
+    padding: 13px 15px;
+    color: #482d39;
+    background: #fffafd;
+    border: 1px solid #e8bbcc;
+    border-radius: 12px;
+    outline: none;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+textarea {
+    min-height: 190px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+input:focus,
+textarea:focus {
+    background: white;
+    border-color: #cf5a84;
+    box-shadow: 0 0 0 4px rgba(207, 90, 132, 0.13);
+}
+
+input.error,
+textarea.error {
+    border-color: #c73753;
+    background: #fff7f8;
+}
+
+.error-msg {
+    display: block;
+    margin-top: 7px;
+    color: #bd304e;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 25px;
+}
+
+.checkbox-group input {
+    width: 18px;
+    height: 18px;
+    accent-color: #c84675;
+}
+
+.checkbox-group label {
+    margin: 0;
+}
+
+/* =========================
+   Пораки
+========================= */
+
+.success-message {
+    padding: 14px 17px;
+    margin-bottom: 22px;
+    color: #286942;
+    background: #e7f7ed;
+    border: 1px solid #b9e4c8;
+    border-radius: 12px;
+    font-weight: 650;
+}
+
+.error-message {
+    padding: 14px 17px;
+    margin-bottom: 22px;
+    color: #9f2943;
+    background: #fff0f3;
+    border: 1px solid #efbec9;
+    border-radius: 12px;
+}
+
+/* =========================
+   Pagination
+========================= */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 35px;
+}
+
+.pagination a,
+.pagination span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 12px;
+    border-radius: 10px;
+}
+
+.pagination a {
+    color: #8f385b;
+    background: white;
+    border: 1px solid #edbfd0;
+}
+
+.pagination a:hover {
+    background: #fbe1ea;
+}
+
+.pagination .active,
+.pagination span[aria-current="page"] {
+    color: white;
+    background: #c74775;
+}
+
+/* =========================
+   Breeze login/register
+========================= */
+
+.min-h-screen {
+    min-height: 100vh;
+}
+
+.bg-gray-100 {
+    background:
+        radial-gradient(circle at top left, #ffe5ef 0, transparent 35%),
+        linear-gradient(135deg, #fff7fa 0%, #fce8f0 100%);
+}
+
+.bg-white {
+    background-color: white;
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 760px) {
+    .container {
+        width: min(100% - 24px, 1100px);
+    }
+
+    .nav-container {
+        padding: 16px 0;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .main-navigation {
+        width: 100%;
+        gap: 13px;
+    }
+
+    .card,
+    .post-card {
+        padding: 23px 19px;
+        border-radius: 16px;
+    }
+
+    .page-content {
+        padding-top: 28px;
+    }
+
+    .post-meta {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .post-actions,
+    .form-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .post-actions a,
+    .post-actions button,
+    .form-actions a,
+    .form-actions button,
+    .post-actions form {
+        width: 100%;
+    }
+}
