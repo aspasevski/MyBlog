@@ -4,9 +4,7 @@
 
 @section('content')
     @if (session('success'))
-        <div class="success-message">
-            {{ session('success') }}
-        </div>
+        <x-alert :message="session('success')" />
     @endif
 
     <article class="card">
@@ -42,11 +40,8 @@
                 Edit Post
             </a>
 
-            <form
-                action="{{ route('posts.destroy', $post) }}"
-                method="POST"
-                onsubmit="return confirm('Are you sure you want to delete this post?')"
-            >
+            <form action="{{ route('posts.destroy', $post) }}" method="POST"
+                onsubmit="return confirm('Are you sure you want to delete this post?')">
                 @csrf
                 @method('DELETE')
 
@@ -61,11 +56,7 @@
         <h2>Add a comment</h2>
 
         @auth
-            <form
-                action="{{ route('comments.store', $post) }}"
-                method="POST"
-                class="comment-form"
-            >
+            <form action="{{ route('comments.store', $post) }}" method="POST" class="comment-form">
                 @csrf
 
                 <div class="form-group">
@@ -73,13 +64,8 @@
                         Your comment
                     </label>
 
-                    <textarea
-                        id="body"
-                        name="body"
-                        rows="4"
-                        class="@error('body') input-error @enderror"
-                        placeholder="Write your comment here..."
-                    >{{ old('body') }}</textarea>
+                    <textarea id="body" name="body" rows="4" class="@error('body') input-error @enderror"
+                        placeholder="Write your comment here...">{{ old('body') }}</textarea>
 
                     @error('body')
                         <div class="validation-error">
