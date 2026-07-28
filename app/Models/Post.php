@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model {
+class Post extends Model
+{
 
-//polinja kooi smeat da se vnesuvaat
+    //polinja kooi smeat da se vnesuvaat
     protected $fillable = [
         'user_id',
         'title',
@@ -16,17 +17,25 @@ class Post extends Model {
 
 
     //published da se tretira kako true/false
-    protected $casts =[
+    protected $casts = [
         'published' => 'boolean',
     ];
 
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
         //sekoj post da pripagja barem na eden korisnik
     }
 
-    public function scopePublished($query){
-        return $query -> where('published',true);
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->latest();
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('published', true);
     }
 }
