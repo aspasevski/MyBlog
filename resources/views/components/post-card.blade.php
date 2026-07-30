@@ -1,8 +1,10 @@
 <article class="card post-card">
     <div class="post-meta">
         <span>
-            By {{ $post->user->name }}
-        </span>
+            By
+            <a href="{{ route('users.posts', $post->user) }}">
+                {{ $post->user->name }}
+            </a> </span>
 
 
 
@@ -10,11 +12,11 @@
             {{ $post->created_at->format('d.m.Y H:i') }}
         </span>
     </div>
-<h2>
-    <a href="{{ route('posts.show', $post) }}" class="post-title">
-        {{ $post->title }}
-    </a>
-</h2>
+    <h2>
+        <a href="{{ route('posts.show', $post) }}" class="post-title">
+            {{ $post->title }}
+        </a>
+    </h2>
 
 
 

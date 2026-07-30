@@ -8,8 +8,7 @@ class StorePostRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        // Засега true бидејќи немаме направено login систем.
-        return true;
+        return auth()->check();
     }
 
     public function rules(): array
@@ -27,8 +26,8 @@ class StorePostRequest extends FormRequest
             'title.required' => 'The title field is required.',
             'title.min' => 'The title must have at least :min characters.',
             'title.max' => 'The title cannot have more than :max characters.',
-            'body.required' => 'The contents field is required.',
-            'body.min' => 'The contents must have at least :min characters.',
+            'body.required' => 'The content field is required.',
+            'body.min' => 'The content must have at least :min characters.',
         ];
     }
 }

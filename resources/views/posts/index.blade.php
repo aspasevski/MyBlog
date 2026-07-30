@@ -7,9 +7,11 @@
             <h1>Latest Posts</h1>
         </div>
 
-        <a href="{{ route('posts.create') }}" class="button">
-            + Add New Post
-        </a>
+        @auth
+            <a href="{{ route('posts.create') }}" class="button">
+                + Add New Post
+            </a>
+        @endauth
     </div>
 
     @if (session('success'))
@@ -22,11 +24,16 @@
         @empty
             <div class="empty-state">
                 <h2>No posts yet</h2>
-                <p>Create your first blog post.</p>
 
-                <a href="{{ route('posts.create') }}" class="button">
-                    Create Post
-                </a>
+                @auth
+                    <p>Create your first blog post.</p>
+
+                    <a href="{{ route('posts.create') }}" class="button">
+                        Create Post
+                    </a>
+                @else
+                    <p>There are no published posts yet.</p>
+                @endauth
             </div>
         @endforelse
     </div>

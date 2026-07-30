@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
-use Illuminate\Http\Request;
+use App\Models\User;
 
 class PostController extends Controller
 {
     public function index()
     {
         $posts = Post::with('user')
-            ->where('published', true)
+            ->withCount('comments')
+            ->published()
             ->latest()
             ->paginate(10);
 
@@ -29,11 +31,7 @@ class PostController extends Controller
 
         $validated['published'] = $request->boolean('published');
 
-        // Засега го поврзуваме постот со корисникот со ID 1.
-        // Подоцна, кога ќе направиме login, ќе користиме auth()->id().
-        $validated['user_id'] = 1;
-
-        $post = Post::create($validated);
+        $post = auth()->user()->posts()->create($validated);
 
         return redirect()
             ->route('posts.show', $post)
@@ -42,28 +40,30 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
+        if (! $post->published && auth()->id() !== $post->user_id) {
+            abort(404);
+        }
+
         $post->load([
             'user',
-            'comments.user'
+            'comments.user',
         ]);
 
         $post->loadCount('comments');
 
-        return view('posts.show' , compact('post'));
+        return view('posts.show', compact('post'));
     }
 
     public function edit(Post $post)
     {
+        $this->ensureOwner($post);
+
         return view('posts.edit', compact('post'));
     }
 
-    public function update(Request $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        $validated = $request->validate([
-            'title' => ['required', 'string', 'min:3', 'max:200'],
-            'body' => ['required', 'string', 'min:10'],
-            'published' => ['nullable', 'boolean'],
-        ]);
+        $validated = $request->validated();
 
         $validated['published'] = $request->boolean('published');
 
@@ -76,10 +76,33 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
+        $this->ensureOwner($post);
+
         $post->delete();
 
         return redirect()
             ->route('posts.index')
             ->with('success', 'The post was deleted successfully!');
+    }
+
+    public function byUser(User $user)
+    {
+        $posts = $user->posts()
+            ->with('user')
+            ->withCount('comments')
+            ->published()
+            ->latest()
+            ->paginate(10);
+
+        return view('posts.user', compact('user', 'posts'));
+    }
+
+    private function ensureOwner(Post $post): void
+    {
+        abort_unless(
+            auth()->check() && auth()->id() === $post->user_id,
+            403,
+            'You are not allowed to modify this post.'
+        );
     }
 }

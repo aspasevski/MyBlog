@@ -10,8 +10,10 @@
     <article class="card">
         <div class="post-meta">
             <span>
-                By {{ $post->user->name }}
-            </span>
+                By
+                <a href="{{ route('users.posts', $post->user) }}">
+                    {{ $post->user->name }}
+                </a> </span>
 
             <span>
                 {{ $post->created_at->format('d.m.Y H:i') }}
@@ -36,19 +38,23 @@
                 ← Back to Posts
             </a>
 
-            <a href="{{ route('posts.edit', $post) }}" class="button action-link">
-                Edit Post
-            </a>
+            @auth
+                @if (auth()->id() === $post->user_id)
+                    <a href="{{ route('posts.edit', $post) }}" class="button action-link">
+                        Edit Post
+                    </a>
 
-            <form action="{{ route('posts.destroy', $post) }}" method="POST"
-                onsubmit="return confirm('Are you sure you want to delete this post?')">
-                @csrf
-                @method('DELETE')
+                    <form action="{{ route('posts.destroy', $post) }}" method="POST"
+                        onsubmit="return confirm('Are you sure you want to delete this post?')">
+                        @csrf
+                        @method('DELETE')
 
-                <button type="submit" class="delete-button">
-                    Delete Post
-                </button>
-            </form>
+                        <button type="submit" class="delete-button">
+                            Delete Post
+                        </button>
+                    </form>
+                @endif
+            @endauth
         </div>
     </article>
 
